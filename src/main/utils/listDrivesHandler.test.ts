@@ -18,6 +18,14 @@ describe("listDrivesHandler", () => {
     vi.clearAllMocks();
   });
 
+  it("will return error when wrong OS", async () => {
+    // This value will be returned after all the values in the loop, this is done to not crash the tester
+    vi.mocked(list).mockReturnValue(Promise.reject("Invalid OS"));
+
+    await expect(() => listDrivesHandler(undefined, undefined)).rejects.toThrowError("Invalid OS");
+    expect(list).toBeCalledTimes(1);
+  });
+
   it("runs forever when device never found", async () => {
     // This value will be returned after all the values in the loop, this is done to not crash the tester
     let temp = vi.mocked(list).mockReturnValue(
