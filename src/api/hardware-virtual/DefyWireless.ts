@@ -96,11 +96,11 @@ const DefyWireless: VirtualType = {
     },
     "led.mode": {
       data: "0",
-      eraseable: true,
+      eraseable: false,
     },
     "led.fade": {
       data: "0",
-      eraseable: true,
+      eraseable: false,
     },
     "led.brightness": {
       data: "153 ",

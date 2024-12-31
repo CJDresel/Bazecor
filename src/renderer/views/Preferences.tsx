@@ -52,7 +52,6 @@ import {
   IconChip,
   IconWrench,
 } from "@Renderer/components/atoms/icons";
-import Version from "@Renderer/components/atoms/Version";
 
 import Store from "@Renderer/utils/Store";
 import { useDevice } from "@Renderer/DeviceContext";
@@ -131,7 +130,7 @@ const initialKBData = {
 const initialPreferences = {
   devTools: false,
   advanced: false,
-  verboseFocus: false,
+  verbose: store.get("settings.verbose") as boolean,
   darkMode: store.get("settings.darkMode") as string,
   neurons: store.get("neurons") as Array<Neuron>,
   selectedNeuron: 0,
@@ -510,10 +509,14 @@ const Preferences = (props: PreferencesProps) => {
   };
 
   const onChangeVerbose = () => {
-    setPreferencesState(prevState => ({
-      ...prevState,
-      verboseFocus: !prevState.verboseFocus,
-    }));
+    setPreferencesState(prevState => {
+      log.transports.console.level = !prevState.verbose ? "verbose" : "info";
+      store.set("settings.verbose", !prevState.verbose);
+      return {
+        ...prevState,
+        verbose: !prevState.verbose,
+      };
+    });
   };
 
   const openDevTool = useCallback(() => {
@@ -609,12 +612,13 @@ const Preferences = (props: PreferencesProps) => {
       if (!darkMode) {
         darkMode = "system";
       }
+      const verbose = store.get("settings.verbose") as boolean;
       setPreferencesState(prevPreferencesState => ({
         ...prevPreferencesState,
         devTools,
         darkMode,
+        verbose,
         selectedNeuron: prevPreferencesState.neurons.indexOf(prevPreferencesState.neurons.find((x: Neuron) => x.id === NID)),
-        verboseFocus: true,
       }));
 
       ipcRenderer.on("opened-devtool", openDevTool);
@@ -637,7 +641,7 @@ const Preferences = (props: PreferencesProps) => {
     visible: { opacity: 1, transition: { duration: 0.5 } },
   };
 
-  const { neurons, selectedNeuron, darkMode, neuronID, devTools, verboseFocus } = preferencesState;
+  const { neurons, selectedNeuron, darkMode, neuronID, devTools, verbose } = preferencesState;
   const { defaultLayer } = kbData;
 
   if (localloading)
@@ -798,7 +802,7 @@ const Preferences = (props: PreferencesProps) => {
                     selectedNeuron={selectedNeuron}
                     devTools={devTools}
                     onChangeDevTools={onChangeDevTools}
-                    verbose={verboseFocus}
+                    verbose={verbose}
                     onChangeVerbose={onChangeVerbose}
                     allowBeta={allowBeta}
                     onChangeAllowBetas={updateAllowBetas}
@@ -842,7 +846,6 @@ const Preferences = (props: PreferencesProps) => {
               )}
             </div>
           </div>
-          <Version />
         </Tabs>
       </div>
     </div>

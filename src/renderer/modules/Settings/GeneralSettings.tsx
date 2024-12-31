@@ -227,7 +227,7 @@ const GeneralSettings = ({
             </div>
             <div className="flex items-center w-full justify-between py-2 border-b-[1px] border-gray-50 dark:border-gray-700">
               <label htmlFor="verboseSwitch" className="m-0 text-sm font-semibold tracking-tight">
-                {i18n.preferences.verboseFocus}
+                {i18n.preferences.verbose}
               </label>
               <Switch
                 id="verboseSwitch"

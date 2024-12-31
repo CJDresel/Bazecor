@@ -37,7 +37,7 @@ const ModifiersTab = ({
 }: ModifiersTabProps) => {
   const [activeModifier, setActiveModifier] = useState<string>("");
   const [activeModifierTab, setActiveModifierTab] = useState<string>("None");
-  const [internalKeyBase, setInternalKeyBase] = useState<number>(0);
+  const [internalKeyBase, setInternalKeyBase] = useState<number>(keyCode.base);
   const [openKeysPopover, setOpenKeysPopover] = useState<boolean>(false);
 
   const KC = useMemo(() => {
@@ -94,6 +94,7 @@ const ModifiersTab = ({
   const handleModifier = (modifier: string) => {
     const modifierItem = findModifierType(undefined, activeModifierTab, modifier);
     setActiveModifier(modifier);
+    log.info(modifier, modifierItem, internalKeyBase);
     if (modifierItem && modifierItem.type !== "dualModifier") {
       onKeySelect(modifierItem.keynum);
     }

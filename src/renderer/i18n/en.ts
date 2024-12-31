@@ -518,7 +518,7 @@ const English = {
       language: "",
     },
     advanced: "Advanced",
-    verboseFocus: "Verbose logging",
+    verbose: "Verbose logging",
     onlyCustom: "Use only custom layers",
     allowBeta: "Show Beta firmwares",
     autoUpdate: "Enable AutoUpdate",

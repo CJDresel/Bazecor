@@ -250,12 +250,14 @@ export default class Backup {
         const data = virtual.virtual;
         for (const command in data) {
           if (data[command].eraseable === true) {
-            log.info(`Going to send ${command} to keyboard`);
             // eslint-disable-next-line no-await-in-loop
-            await device.noCacheCommand(`${command} ${data[command].data}`.trim());
+            if (!(command.includes("wireless") || command.includes("led"))) {
+              log.warn(`Going to send ${command} to keyboard`);
+              // eslint-disable-next-line no-await-in-loop
+              await device.command(command, data[command].data.trim());
+            }
           }
         }
-        await device.noCacheCommand("led.mode 0");
         log.info("Settings restored OK");
         return true;
       } catch (e) {

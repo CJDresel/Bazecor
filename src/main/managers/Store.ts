@@ -15,6 +15,7 @@ const schema: Schema<StorageType> = {
       hideBluetoothExperimental: { type: "boolean" },
       showDefaults: { type: "boolean" },
       autoUpdate: { type: "boolean" },
+      verbose: { type: "boolean" },
       version: { type: "string" },
     },
     default: {
@@ -25,6 +26,7 @@ const schema: Schema<StorageType> = {
       hideBluetoothExperimental: false,
       showDefaults: false,
       autoUpdate: undefined,
+      verbose: false,
       version: undefined,
     },
     required: [],

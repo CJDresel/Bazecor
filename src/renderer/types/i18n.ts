@@ -753,7 +753,7 @@ export interface Preferences {
   interface: string;
   tooltips: Tooltips;
   advanced: string;
-  verboseFocus: string;
+  verbose: string;
   onlyCustom: string;
   allowBeta: string;
   darkMode: DarkMode;

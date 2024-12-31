@@ -1160,7 +1160,7 @@ const LayoutEditor = (props: LayoutEditorProps) => {
 
     if (currentLayer < 0 || currentLayer >= colorMap.length) return;
 
-    if (!isEqualColor && currentKeyIndex > 0) {
+    if (!isEqualColor && currentKeyIndex >= 0) {
       const colormap = colorMap.slice();
       colormap[currentLayer][currentLedIndex] = colorIndex;
       if (currentDevice.device.keyboard.ledsLeft.includes(currentLedIndex)) setLeftSideModified(true);

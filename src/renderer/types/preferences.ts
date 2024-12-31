@@ -64,7 +64,7 @@ export interface KBDataPref {
 export interface PrefState {
   devTools: boolean;
   advanced: boolean;
-  verboseFocus: boolean;
+  verbose: boolean;
   darkMode: string;
   neurons: Array<Neuron>;
   selectedNeuron: number;

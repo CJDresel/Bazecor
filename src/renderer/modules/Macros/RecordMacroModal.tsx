@@ -248,6 +248,9 @@ const RecordMacroModal = (props: Props) => {
           onInteractOutside={e => {
             e.preventDefault();
           }}
+          onEscapeKeyDown={e => {
+            e.preventDefault();
+          }}
         >
           <DialogHeader>
             <DialogTitle className="flex justify-center text-center">
