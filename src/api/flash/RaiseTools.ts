@@ -158,7 +158,9 @@ export const updateFirmware = async (filename: string[], stateUpdate: any, path:
   stateUpdate("neuron", 0);
 
   const focus = Focus.getInstance();
-  if (focus.closed || focus._port === undefined) await focus.open(path, device, null);
+  if (focus.closed || focus._port === undefined) {
+    await focus.open(path, device);
+  }
   await new Promise((resolve, reject) => {
     arduino.flash(filename, stateUpdate, async (err: any, result: any) => {
       if (err) reject(new Error(`Flash error ${result}`));
