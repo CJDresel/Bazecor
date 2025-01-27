@@ -211,9 +211,9 @@ const Raise2Flash = {
       address += bufferSize;
     }
 
-    log.info("Validating...");
-    ans = await rawCommand("V#", serialPort, 1000);
-    if (ans[0] !== 65) throw Error("error when Validating");
+    // log.info("Validating...");
+    // ans = await rawCommand("V#", serialPort, 1000);
+    // if (ans[0] !== 65) throw Error("error when Validating");
 
     // START APPLICATION
     ans = await rawCommand("F#", serialPort, 1000);

@@ -202,13 +202,16 @@ export const uploadDefyWired = async (context: Context.ContextType) => {
     stateUpdate("neuron", 10, context);
     await context.flashSides.prepareNeuron();
     stateUpdate("neuron", 30, context);
-    await ipcRenderer.invoke("list-drives", true).then(rsl => {
-      stateUpdate("neuron", 60, context);
-      const finalPath = path.join(rsl, "default.uf2");
-      // log.info("RESULTS!!!", rsl, context.firmwares.fw, " to ", finalPath);
-      fs.writeFileSync(finalPath, Buffer.from(new Uint8Array(context.firmwares?.fw)));
-      stateUpdate("neuron", 80, context);
-    });
+    const rsl = await ipcRenderer.invoke("list-drives", true);
+    stateUpdate("neuron", 60, context);
+    const finalPath = path.join(rsl, "default.uf2");
+    // log.info("RESULTS!!!", rsl, new Uint8Array(context.firmwares.fw), " to ", finalPath);
+    if (context.firmwares.fw.length === 1) {
+      fs.copyFileSync(context.firmwares.fw[0], finalPath);
+    } else {
+      fs.writeFileSync(finalPath, Buffer.from(new Uint8Array(context.firmwares?.fw)), { encoding: "utf8", flag: "w" });
+    }
+    stateUpdate("neuron", 80, context);
     stateUpdate("neuron", 100, context);
   } catch (error) {
     log.warn("error when flashing Neuron");
