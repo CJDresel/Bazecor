@@ -192,7 +192,7 @@ const obtainLocalFWFiles = (customFWPath: string) => {
     result = fromHexString(filedata);
   }
   if (customFWPath.includes(".uf2")) {
-    result = fs.readFileSync(customFWPath, { encoding: "binary" });
+    result = customFWPath;
   }
   return result;
 };
@@ -232,7 +232,7 @@ export const downloadFirmware = async (
                 "Wired_neuron.uf2",
                 firmwareList[selectedFirmware].assets.find((asset: { name: string }) => asset.name === "Wired_neuron.uf2").url,
               )) as Array<string>)
-            : (obtainLocalFWFiles(path.join(customFirmwareFolder, "Wired_neuron.uf2")) as Array<string>);
+            : [obtainLocalFWFiles(path.join(customFirmwareFolder, "Wired_neuron.uf2")) as string];
       }
       filenameSides =
         typeSelected === "default"

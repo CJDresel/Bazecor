@@ -50,6 +50,10 @@ const FlashDevice = setup({
     doNotFlashSidesWi: ({ context }) =>
       context.device?.bootloader === true &&
       context.device.info.product !== "Raise" &&
+      (context.device.info.keyboardType === "wireless" || context.device.info.product !== "Raise2"),
+    doNotFlashSidesR2: ({ context }) =>
+      context.device?.bootloader === true &&
+      context.device.info.product !== "Raise" &&
       (context.device.info.keyboardType === "wireless" || context.device.info.product === "Raise2"),
     doNotWaitForESC: ({ context }) =>
       (context.device?.bootloader === true || context.sideLeftBL === true) && context.loadedComms === true,
@@ -124,6 +128,7 @@ const FlashDevice = setup({
         "*": [
           { target: "flashDefyWired", guard: "doNotFlashSidesW" },
           { target: "resetDefyWireless", guard: "doNotFlashSidesWi" },
+          { target: "resetRaise2", guard: "doNotFlashSidesR2" },
           { target: "resetRaiseNeuron", guard: "flashRaise" },
           { target: "flashRightSide", guard: "flashSides" },
         ],

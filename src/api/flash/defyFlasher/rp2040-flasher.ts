@@ -40,7 +40,7 @@ export default class Rp2040 {
     log.info("flashing rp2040 with rom bootloader", this.device);
     ipcRenderer.invoke("list-drives").then(result => {
       const finalPath = path.join(result, "default.uf2");
-      // console.log("RESULTS!!!", result, file, " to ", finalPath);
+      // log.info("RESULTS!!!", result, "default.uf2", " to ", finalPath);
       fs.writeFileSync(finalPath, Buffer.from(new Uint8Array(firmware)));
       stateUpdate(3, 80);
       finished(false, "");

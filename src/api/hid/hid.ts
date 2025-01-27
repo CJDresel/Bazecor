@@ -118,6 +118,7 @@ class HID {
       }
       throw new HIDError("No HID Devices to connect");
     } catch (err) {
+      log.error(err);
       throw new HIDError("HID Device could not be connected");
     }
   };

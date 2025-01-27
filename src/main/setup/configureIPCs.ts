@@ -41,7 +41,7 @@ const configureIPCs = () => {
   });
 
   ipcMain.handle("list-drives", async (event, options) => {
-    const data = listDrivesHandler(event, options);
+    const data = await listDrivesHandler(event, options);
     return data;
   });
 
