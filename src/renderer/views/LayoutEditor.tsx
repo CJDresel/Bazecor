@@ -1205,9 +1205,6 @@ const LayoutEditor = (props: LayoutEditorProps) => {
     // if (data.palette.length > 0) state.palette = data.palette;
     const lNames = layerNames.slice();
     if (data.layerNames !== null) {
-      for (let i = 0; i < data.layerNames.length; i += 1) {
-        lNames[i] = data.layerNames[i];
-      }
       if (data.layerName && currentLayer) {
         lNames[currentLayer] = { name: data.layerName, id: currentLayer };
       }

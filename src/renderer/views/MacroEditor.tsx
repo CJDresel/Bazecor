@@ -355,7 +355,7 @@ function MacroEditor(props: MacroEditorProps) {
             .filter(elem => elem.actions[elem.pos].keyCode === macroID),
         )
         .flat();
-      customKeymapList = [...filteredKeys];
+      customKeymapList = customKeymapList.concat(filteredKeys);
       customSuperList = customSuperList.concat(superkeyList);
       customMacrosList = customMacrosList.concat(macrosList);
     }
