@@ -17,7 +17,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Octokit } from "@octokit/core";
-// import log from "electron-log/renderer";
+import log from "electron-log/renderer";
 import SemVer from "semver";
 import parse, { domToReact } from "html-react-parser";
 
@@ -26,12 +26,12 @@ import { i18n } from "@Renderer/i18n";
 import Heading from "@Renderer/components/atoms/Heading";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@Renderer/components/atoms/Accordion";
 import LogoLoader from "@Renderer/components/atoms/loader/LogoLoader";
+import { version } from "../../../../../package.json";
 
 interface VersionUpdateProps {
   open: boolean;
   onCancel: () => void;
   oldVersion: string;
-  newVersion: string;
   handleUpdate: () => void;
 }
 
@@ -94,7 +94,7 @@ const options = {
 };
 
 export function VersionUpdateDialog(props: VersionUpdateProps) {
-  const { open, onCancel, newVersion, oldVersion, handleUpdate } = props;
+  const { open, onCancel, oldVersion, handleUpdate } = props;
   const [data, setData] = useState<Releases[]>(undefined);
 
   useEffect(() => {
@@ -111,17 +111,19 @@ export function VersionUpdateDialog(props: VersionUpdateProps) {
           format: "full",
         },
       });
-      // log.info("Testing", GHdata);
+      log.info("Testing", GHdata);
       GHdata.data.forEach(release => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         const { prerelease, name, published_at, body_html, tag_name } = release;
         const newRelease = { name, version: tag_name, date: published_at, content: body_html };
         if (!prerelease) releases.push(newRelease);
       });
-      // log.info("Data from Dialog: ", releases, newVersion, oldVersion);
-      const versionToCheck = oldVersion || newVersion;
-      const parsedData = releases.filter(r => SemVer.compare(r.version, versionToCheck) >= 0);
-      // log.info("Data from Dialog: ", parsedData);
+      log.info("Data from Dialog: ", releases, version, oldVersion);
+      const parsedData = releases.filter(r =>
+        oldVersion
+          ? SemVer.compare(r.version, oldVersion) > 0 && SemVer.compare(r.version, version) <= 0
+          : SemVer.compare(r.version, version) === 0,
+      );
       setData(parsedData);
     }
     fetchData();

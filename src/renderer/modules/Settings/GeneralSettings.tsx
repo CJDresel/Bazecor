@@ -298,7 +298,6 @@ const GeneralSettings = ({
       <VersionUpdateDialog
         open={versionDialog}
         oldVersion={version}
-        newVersion={version}
         handleUpdate={() => {}}
         onCancel={() => setVersionDialog(false)}
       />

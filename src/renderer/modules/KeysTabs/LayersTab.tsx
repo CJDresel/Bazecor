@@ -2,6 +2,7 @@
 import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-toastify";
+// import log from "electron-log/renderer";
 
 import { Button } from "@Renderer/components/atoms/Button";
 import Heading from "@Renderer/components/atoms/Heading";
@@ -100,6 +101,17 @@ const LayersTab = ({
     keyNumInternal = 0;
   }
 
+  const handleDual = (keyBase: number, layer?: number) => {
+    const layerItem = layer
+      ? findLayerType(undefined, activeLayerTab, layer)
+      : findLayerType(undefined, activeLayerTab, activeLayerNumber);
+    // log.info("checking layer item", layerItem, layerItem.keynum + keyBase);
+    if (layerItem && layerItem.type === "layerDual") {
+      onKeySelect(layerItem.keynum + keyBase);
+      setOpenKeysPopover(false);
+    }
+  };
+
   const handleLayer = (layerNumber: number) => {
     const layerItem = findLayerType(undefined, activeLayerTab, layerNumber);
     // console.log("Layer inside handle: ", layerItem);
@@ -113,6 +125,8 @@ const LayersTab = ({
     }
     if (layerItem && layerItem.type !== "layerDual") {
       onKeySelect(layerItem.keynum);
+    } else {
+      handleDual(keyCode.base, layerNumber);
     }
   };
 
@@ -120,14 +134,6 @@ const LayersTab = ({
     setActiveLayerTab(value);
     const layerItem = findLayerType(undefined, value, activeLayerNumber);
     onKeySelect(layerItem.keynum);
-  };
-
-  const handleDual = (keyBase: number) => {
-    const layerItem = findLayerType(undefined, activeLayerTab, activeLayerNumber);
-    if (layerItem && layerItem.type === "layerDual") {
-      onKeySelect(layerItem.keynum + keyBase);
-      setOpenKeysPopover(false);
-    }
   };
 
   useEffect(() => {
@@ -208,7 +214,10 @@ const LayersTab = ({
                       handleLayer(index + 1);
                     }}
                     selected={index + 1 === activeLayerNumber}
-                    disabled={index > 7 && disableOneShotButtons && activeLayerTab === "layerShot"}
+                    disabled={
+                      (index > 7 && disableOneShotButtons && activeLayerTab === "layerShot") ||
+                      (activeLayerTab === "layerDual" && index > 7)
+                    }
                     key={`buttonLayerID-${button.layer}`}
                     className="h-9 aspect-square"
                   >
@@ -385,7 +394,8 @@ const LayersTab = ({
                           hold it. Double-tap it to lock into the layer; go back to the previous layer by tapping the key again.
                           <br />
                           <br />
-                          OneShot layers only work for layers 1 to 8.
+                          OneShot layers only work for layers 1 to 8, and you need to set the same key as &quot;Transparent&quot;
+                          in the destination layer.
                         </p>
                       </>
                     }

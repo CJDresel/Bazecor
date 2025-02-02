@@ -70,6 +70,7 @@ function App() {
   const [fwUpdate, setFwUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notifyNewVersion, setNotifyNewVersion] = useState(false);
+  const [oldSettings] = useState(store.get("settings"));
 
   const saveButtonRef = useRef(null);
   const discardChangesButtonRef = useRef(null);
@@ -78,7 +79,6 @@ function App() {
   const navigate = useNavigate();
   const varFlashing = React.useRef(false);
   const device: any = React.useRef();
-  const oldSettings = store.get("settings");
 
   const updateStorageSchema = async () => {
     // Update stored settings schema
@@ -521,7 +521,6 @@ function App() {
       <VersionUpdateDialog
         open={notifyNewVersion}
         oldVersion={oldSettings.version}
-        newVersion={version}
         handleUpdate={handleUpdateVersion}
         onCancel={() => setNotifyNewVersion(false)}
       />
