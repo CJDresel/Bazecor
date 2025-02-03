@@ -2,7 +2,7 @@
 import log from "electron-log/renderer";
 import type { SerialPort as SP } from "serialport";
 import { DygmaDeviceType } from "@Renderer/types/dygmaDefs";
-import { delay } from "./delay";
+import { delay } from "../../main/utils/delay";
 import { findDevice } from "./findDevice";
 import Device from "../comms/Device";
 import { arduino } from "./raiseFlasher/arduino-flasher";

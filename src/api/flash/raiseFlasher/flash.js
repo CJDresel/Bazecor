@@ -20,7 +20,7 @@ import path from "path";
 import log from "electron-log/renderer";
 import Focus from "../../focus";
 import Hardware from "../../hardware";
-import { delay } from "../delay";
+import { delay } from "../../../main/utils/delay";
 import formatedDate from "../formatedDate";
 import { arduino } from "./arduino-flasher";
 
