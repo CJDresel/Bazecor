@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 /* eslint-disable no-await-in-loop */
 import log from "electron-log/main";
-import delay from "./delay";
+import { delay } from "./delay";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const drivelist = require("drivelist");
