@@ -26,7 +26,7 @@ import log from "electron-log/renderer";
 // eslint-disable-next-line import/no-cycle
 import { DygmaDeviceType } from "@Renderer/types/dygmaDefs";
 import { VirtualType } from "@Renderer/types/virtual";
-import { delay } from "../flash/delay";
+import { delay } from "../../main/utils/delay";
 import { ctx } from "./Focus.ctx";
 
 // TODO: any reason we can't import directly?
