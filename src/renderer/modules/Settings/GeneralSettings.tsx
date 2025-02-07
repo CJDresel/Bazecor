@@ -297,7 +297,7 @@ const GeneralSettings = ({
       </Card>
       <VersionUpdateDialog
         open={versionDialog}
-        oldVersion={version}
+        oldVersion={undefined}
         handleUpdate={() => {}}
         onCancel={() => setVersionDialog(false)}
       />
