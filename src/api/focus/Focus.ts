@@ -24,7 +24,13 @@ import { SerialPort } from "serialport";
 import type { AutoDetectTypes, PortInfo } from "@serialport/bindings-cpp";
 import { DelimiterParser } from "@serialport/parser-delimiter";
 import { DygmaDeviceType } from "@Renderer/types/dygmaDefs";
-import { delay } from "../flash/delay";
+import { VirtualType } from "@Renderer/types/virtual";
+import { delay } from "../../main/utils/delay";
+import { ctx } from "./Focus.ctx";
+
+// TODO: any reason we can't import directly?
+const sp = eval('require("serialport")');
+const { DelimiterParser } = eval('require("@serialport/parser-delimiter")');
 
 type AnyFunction = (...args: unknown[]) => unknown;
 
