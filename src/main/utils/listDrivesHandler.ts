@@ -3,7 +3,7 @@
 /* eslint-disable no-plusplus */
 import log from "electron-log/main";
 import { Drive, list } from "drivelist";
-import delay from "./delay";
+import { delay } from "./delay";
 
 // Only used in the test to ensure proper behaviour when limiting the retries.
 // TODO: Remove this setter when determination is made for retry count.
