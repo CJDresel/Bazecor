@@ -146,12 +146,19 @@ function MacroEditor(props: MacroEditorProps) {
   const { state: deviceState } = useDevice();
   const timelineRef = useRef(null);
 
+  const limitActions = (actions: MacroActionsType[]) => {
+    if (deviceState.currentDevice.device.info.product !== "Raise") {
+      return actions.slice(0, 100);
+    }
+    return actions;
+  };
+
   const addToActions = (actions: MacroActionsType[]) => {
     const { startContext } = props;
     const { macros, selectedMacro } = state;
 
     const macrosList: MacrosType[] = JSON.parse(JSON.stringify(macros));
-    macrosList[selectedMacro].actions = macrosList[selectedMacro].actions.concat(actions);
+    macrosList[selectedMacro].actions = limitActions(macrosList[selectedMacro].actions.concat(actions));
     state.macros = macrosList;
     state.modified = true;
     setState({ ...state });
@@ -164,7 +171,7 @@ function MacroEditor(props: MacroEditorProps) {
     const { macros, selectedMacro, modified } = state;
 
     const macrosList = JSON.parse(JSON.stringify(macros));
-    macrosList[selectedMacro].actions = JSON.parse(JSON.stringify(actions));
+    macrosList[selectedMacro].actions = limitActions(JSON.parse(JSON.stringify(actions)));
     if (!modified) {
       state.macros = macrosList;
       state.modified = true;
