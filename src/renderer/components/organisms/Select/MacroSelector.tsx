@@ -20,6 +20,7 @@ import { i18n } from "@Renderer/i18n";
 
 import NameModal from "@Renderer/components/molecules/CustomModal/ModalName";
 import MacrosMemoryUsage from "@Renderer/modules/Macros/MacrosMemoryUsage";
+import CurrentMacroLength from "@Renderer/components/molecules/Indicators/CurrentMacroLength";
 
 import {
   IconDelete,
@@ -74,6 +75,22 @@ const MacroSelector: React.FC<MacroSelectorProps> = ({
   const toggleShow = () => setShow(!show);
   const [showAdd, setShowAdd] = useState(false);
   const toggleShowAdd = () => setShowAdd(!showAdd);
+  const [macroLength, setMacroLength] = useState(0);
+
+  useState(() => {
+    if (
+      !Array.isArray(itemList) ||
+      selectedItem < 0 ||
+      selectedItem >= itemList.length ||
+      itemList.length === 0 ||
+      !Array.isArray(itemList[selectedItem].actions) ||
+      itemList[selectedItem].actions.length === 0
+    ) {
+      setMacroLength(0);
+    } else {
+      setMacroLength(itemList[selectedItem].actions.length);
+    }
+  });
 
   const handleSave = (data: string) => {
     toggleShow();
@@ -178,6 +195,8 @@ const MacroSelector: React.FC<MacroSelectorProps> = ({
       </TooltipProvider>
 
       <MacrosMemoryUsage mem={mem} tMem={tMem} />
+
+      <CurrentMacroLength macroLenght={macroLength} />
 
       {itemList === undefined || itemList.length === 0 || itemList.length <= selectedItem ? (
         ""
